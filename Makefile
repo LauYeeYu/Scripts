@@ -1,17 +1,17 @@
-PREFIX = /usr/local # the prefix to install to
-BIN_PREFIX = $(PREFIX)/bin/
-MAN1_PREFIX = $(PREFIX)/share/man/man1/
-BASH_PREFIX = $(PREFIX)/share/bash-completion/completions/
-ZSH_PREFIX = $(PREFIX)/share/zsh/site-functions/_
+PREFIX      = /usr/local # the prefix to install to
+BIN_PREFIX  = $(addsuffix /bin/, $(PREFIX))
+MAN1_PREFIX = $(addsuffix /share/man/man1/, $(PREFIX))
+BASH_PREFIX = $(addsuffix /share/bash-completion/completions/, $(PREFIX))
+ZSH_PREFIX  = $(addsuffix /share/zsh/site-functions/_, $(PREFIX))
 
-BIN = $(shell ls bin)
-BIN_TARGETS = $(addprefix $(BIN_PREFIX), $(BIN))
-MAN1 = $(shell cd man && find -name '*.1')
-MAN1_TARGETS = $(addprefix $(MAN1_PREFIX), $(MAN1))
-BASH_COMPLETION = $(shell ls completion/bash)
+BIN                     = $(shell ls bin)
+BIN_TARGETS             = $(addprefix $(BIN_PREFIX), $(BIN))
+MAN1                    = $(shell cd man && find -name '*.1')
+MAN1_TARGETS            = $(addprefix $(MAN1_PREFIX), $(MAN1))
+BASH_COMPLETION         = $(shell ls completion/bash)
 BASH_COMPLETION_TARGETS = $(addprefix $(BASH_PREFIX), $(BASH_COMPLETION))
-ZSH_COMPLETION = $(shell ls completion/zsh)
-ZSH_COMPLETION_TARGETS = $(addprefix $(ZSH_PREFIX), $(ZSH_COMPLETION))
+ZSH_COMPLETION          = $(shell ls completion/zsh)
+ZSH_COMPLETION_TARGETS  = $(addprefix $(ZSH_PREFIX), $(ZSH_COMPLETION))
 
 .PHONY: install
 install: bins man1s bash-completions zsh-completions
