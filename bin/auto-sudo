@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    cat << EOF >&2
+Usage: auto-sudo COMMAND...
+EOF
+    exit 1
+fi
+
+if (( EUID != 0 )); then
+    if sudo -v &>/dev/null && sudo -l &>/dev/null; then
+        sudo "$@"
+    else
+        echo "Fail to escalate to root" >&2
+        exit 1
+    fi
+else
+    "$@"
+fi

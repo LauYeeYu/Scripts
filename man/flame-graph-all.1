@@ -1,0 +1,27 @@
+.EN
+.TH FLAME-GRAPH 1 2023/10/02
+.SH NAME
+flame-graph-all \- generate the graph indicating the status of each function of all processes
+.SH SYNOPSIS
+.nf
+\fIflame-graph-all\fR
+.SH DESCRIPTION
+\fIflame-graph-all\fR generates the graph indicating the status of each function of all processes.
+.sp
+You may set the following environment variables:
+.sp
+.RS
+\fBMAX_TIME\fR - the maximum number of second for timeout, 10 by default.
+.sp
+\fBSTACK_SIZE\fR - the type of stack used for collapse. Options: \fIperf\fR (default),
+\fIjstack\fR (java stack), \fIgdb\fR. \fIgo\fR.
+.sp
+\fBPALETTE\fR - the color palette used for the graph. Options: \fIhot\fR
+(default), \fImem\fR, \fIio\fR, \fIwakeup\fR, \fIchain\fR, \fIjava\fR,
+\fIjs\fR, \fIperl\fR, \fIred\fR, \fIgreen\fR, \fIblue\fR, \fIaqua\fR,
+\fIyellow\fR, \fIpurple\fR, \fIorange\fR.
+.RE
+.SH NOTICE
+The \fIperf.data\fR file and \fIperf.svg\fR file will probably be overwritten.
+.SH "SEE ALSO"
+\fBperf\fR(1), \fBperf-record\fR(1)

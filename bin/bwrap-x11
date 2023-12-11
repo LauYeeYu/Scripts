@@ -1,0 +1,13 @@
+#!/bin/bash
+
+bwrap \
+    --unshare-all --die-with-parent --ro-bind / / \
+    --tmpfs /sys --tmpfs /home --tmpfs /tmp --tmpfs /run \
+    --proc /proc --dev /dev \
+    --ro-bind ~/.fonts ~/.fonts \
+    --ro-bind ~/.config/fontconfig ~/.config/fontconfig \
+    --bind ~/.cache/fontconfig ~/.cache/fontconfig \
+    --ro-bind ~/.Xauthority ~/.Xauthority \
+    --ro-bind /tmp/.X11-unix /tmp/.X11-unix \
+    --ro-bind /run/user/$UID/bus /run/user/$UID/bus \
+    --chdir ~ /bin/bash

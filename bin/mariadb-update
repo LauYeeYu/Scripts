@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+auto-sudo systemctl restart mariadb.service
+auto-sudo mariadb-upgrade -u root -p

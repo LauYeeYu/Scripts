@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# MAX_TIME=<max_time> STACK=<stack_type> PALETTE=<palette> flame-graph-all
+# The program will record all processes with perf
+# MAX_TIME is 10 if the environment variable doesn't exist.
+# STACK is the stack that used for collapse. Options: perf (default),
+#     jstack (java jstack), gdb, go.
+# PALETTE is the type of palette for the flame graph. Options: hot (default),
+#     mem, io, wakeup, chain, java, js, perl, red, green, blue, aqua, yellow,
+#     purple, orange.
+#
+# Note:
+# The perf.data and perf.svg will probably be overwritten.
+
+FLAMEGRAPH_PATH=/opt/FlameGraph
+
+print_warning() {
+    echo -e "\033[33mWarning: $1\033[0m" >&2
+}
+print_error() {
+    echo -e "\033[31mError: $1\033[0m" >&2
+}
+
+# Warning about the perf.data and perf.svg
+if [ -f perf.data ]; then
+    print_warning "perf.data already exists. It will be overwritten."
+fi
+if [ -f perf.svg ]; then
+    print_warning "perf.svg already exists. It will be overwritten."
+fi
+
+sudo perf record -F 99 -a -g -- sleep ${MAX_TIME:-10} 2>/dev/null
+if [ $? -ne 0 ]; then
+    print_error "Perf exits with a non-zero value."
+    exit 1
+fi
+
+# generate the graph
+${FLAMEGRAPH_PATH}/flamegraph.pl --colors "${PALETTE:-hot}" <(${FLAMEGRAPH_PATH}/stackcollapse-${STACK:-perf}.pl <(sudo perf script)) > perf.svg
+rm -f perf.data
+if [ -f perf.svg ]; then
+    echo "Flame graph is at `pwd`/perf.svg" >&2
+else 
+    print_error "Flame graph generation failed."
+    exit 1
+fi

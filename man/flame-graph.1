@@ -1,0 +1,31 @@
+.EN
+.TH FLAME-GRAPH 1 2023/09/16
+.SH NAME
+flame-graph \- generate the graph indicating the status of each function
+.SH SYNOPSIS
+.nf
+\fIflame-graph\fR [\fBCOMMAND\fR]
+.SH DESCRIPTION
+\fIflame-graph\fR generates the graph indicating the status of each function
+in \fBCOMMAND\fR.
+If there is no \fBCOMMAND\fR, it will print the usage and notice.
+.sp
+You may set the following environment variables:
+.sp
+.RS
+\fBINFILE\fR - the input file name, /dev/null by default.
+.sp
+\fBMAX_TIME\fR - the maximum number of second for timeout, 10 by default.
+.sp
+\fBSTACK_SIZE\fR - the type of stack used for collapse. Options: \fIperf\fR (default),
+\fIjstack\fR (java stack), \fIgdb\fR. \fIgo\fR.
+.sp
+\fBPALETTE\fR - the color palette used for the graph. Options: \fIhot\fR
+(default), \fImem\fR, \fIio\fR, \fIwakeup\fR, \fIchain\fR, \fIjava\fR,
+\fIjs\fR, \fIperl\fR, \fIred\fR, \fIgreen\fR, \fIblue\fR, \fIaqua\fR,
+\fIyellow\fR, \fIpurple\fR, \fIorange\fR.
+.RE
+.SH NOTICE
+The \fIperf.data\fR file and \fIperf.svg\fR file will probably be overwritten.
+.SH "SEE ALSO"
+\fBperf\fR(1), \fBperf-record\fR(1)

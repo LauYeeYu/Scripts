@@ -1,0 +1,28 @@
+#!/bin/bash
+
+mkdir -m 700 -p ~/.makepkg/gnupg
+bwrap \
+    --unshare-all --share-net --die-with-parent \
+    --ro-bind /usr /usr --ro-bind /opt /opt --ro-bind /etc /etc \
+    --proc /proc --dev /dev --tmpfs /tmp \
+    --symlink usr/bin /bin \
+    --symlink usr/bin /sbin \
+    --symlink usr/lib /lib \
+    --symlink usr/lib /lib64 \
+    --ro-bind /var/lib/pacman /var/lib/pacman \
+    --ro-bind ~/.ccache ~/.ccache \
+    --bind ~/.cache ~/.cache \
+    --bind ~/.makepkg/gnupg ~/.gnupg \
+    --setenv FAKEROOTDONTTRYCHOWN 1 \
+    --bind $PWD $PWD \
+    /usr/bin/bash << EOF
+. /usr/share/makepkg/util.sh
+. ./PKGBUILD
+for key in "${validpgpkeys[@]}"; do
+echo "Receiving key ${key}..."
+# try both servers as some keys exist one place and others another
+# we also want to always try to receive keys to pick up any update
+gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key" || true
+gpg --keyserver hkps://keys.openpgp.org --recv-keys "$key" || true
+done
+EOF

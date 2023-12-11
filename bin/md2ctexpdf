@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -e
+
+error() {
+    echo -e "\033[31m$*\033[0m" >&2
+}
+
+if [ $# -ne 2 ] && [ $# -ne 1 ]; then
+    cat << EOF >&2
+Usage: md2pdf <input.md> [output.pdf]
+EOF
+    exit 1
+fi
+
+INPUT=$1
+if [ ! -f $INPUT ]; then
+    error "$INPUT not exists!"
+fi
+MD_NAME="$(basename -- "$INPUT").md"
+PDF_NAME="$(basename -- "$INPUT" .md).pdf"
+
+if [ $# -eq 1 ]; then
+    OUTPUT="$(dirname $INPUT)/$PDF_NAME"
+else
+    OUTPUT=$2
+fi
+
+TEMP_DIR="$(mktemp -d -p /tmp md2pdf.XXXXXXXXXX)"
+TEMP_FILE="${TEMP_DIR}/$MD_NAME"
+
+cp "$INPUT" "$TEMP_FILE"
+cat << EOF >> "$TEMP_FILE"
+
+---
+documentclass:
+    - ctexart
+---
+
+EOF
+
+pandoc --pdf-engine=xelatex "$TEMP_FILE" -o "$OUTPUT"
+rm -rf "$TEMP_DIR"

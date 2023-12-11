@@ -1,0 +1,18 @@
+# bash completion for flame-graph            -*- shell-script -*-
+
+_flame-graph()
+{
+    local words cword
+    _init_completion -s || return
+
+    local i
+    for ((i = 1; i <= cword; i++)); do
+        local PATH=$PATH
+        local root_command=${words[i]}
+        _command_offset $i
+        return
+    done
+} &&
+    complete -F _flame-graph flame-graph
+
+# ex: filetype=sh
