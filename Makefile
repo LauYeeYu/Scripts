@@ -4,7 +4,10 @@ MAN1_PREFIX = $(addsuffix /share/man/man1/, $(PREFIX))
 BASH_PREFIX = $(addsuffix /share/bash-completion/completions/, $(PREFIX))
 ZSH_PREFIX  = $(addsuffix /share/zsh/site-functions/_, $(PREFIX))
 
-BIN                     = $(shell ls bin)
+SRC_TARGETS             = makepkg-recursively
+SRC_BIN_FILES           = $(addprefix bin/, $(SRC_TARGETS))
+SRC_INTERMEDIATE_FILES  = $(addprefix src/, $(SRC_TARGETS))
+BIN                     = $(shell ls bin) $(SRC_TARGETS)
 BIN_TARGETS             = $(addprefix $(BIN_PREFIX), $(BIN))
 MAN1                    = $(shell cd man && find -name '*.1')
 MAN1_TARGETS            = $(addprefix $(MAN1_PREFIX), $(MAN1))
@@ -13,10 +16,14 @@ BASH_COMPLETION_TARGETS = $(addprefix $(BASH_PREFIX), $(BASH_COMPLETION))
 ZSH_COMPLETION          = $(shell ls completion/zsh)
 ZSH_COMPLETION_TARGETS  = $(addprefix $(ZSH_PREFIX), $(ZSH_COMPLETION))
 
+CXXFLAGS += -O2 -std=c++17 -MMD
+
 .PHONY: install
 install: bins man1s bash-completions zsh-completions
+all: srcs
 
-.PHONY: bins man1s bash-completions zsh-completions
+.PHONY: srcs bins man1s bash-completions zsh-completions
+srcs: $(SRC_BIN_FILES)
 bins: $(BIN_TARGETS)
 man1s: $(MAN1_TARGETS)
 bash-completions: $(BASH_COMPLETION_TARGETS)
@@ -33,3 +40,10 @@ $(BASH_PREFIX)%: completion/bash/%
 
 $(ZSH_PREFIX)%: completion/zsh/%
 	install -Dm644 $< $@
+
+bin/makepkg-recursively: src/makepkg-recursively
+	cp $< $@
+
+.PHONY: clean
+clean:
+	rm -f $(SRC_BIN_FILES) $(SRC_INTERMEDIATE_FILES) src/*.d
