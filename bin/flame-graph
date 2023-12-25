@@ -53,8 +53,7 @@ fi
 
 "$@" < "${INFILE:-/dev/null}" > /dev/null 2>&1 &
 PID=$!
-perf record -F 99 -p $PID -g -- sleep ${MAX_TIME:-10} 2>/dev/null
-if [ $? -ne 0 ]; then
+if ! perf record -F 99 -p $PID -g -- sleep "${MAX_TIME:-10}" 2>/dev/null; then
     print_error "The program exited before perf is ready to record; try with a bigger input."
     exit 1
 fi
@@ -65,10 +64,10 @@ sleep 0.1
 kill -9 $PID > /dev/null 2>&1
 
 # generate the graph
-${FLAMEGRAPH_PATH}/flamegraph.pl --colors "${PALETTE:-hot}" <(${FLAMEGRAPH_PATH}/stackcollapse-${STACK:-perf}.pl <(perf script)) > perf.svg
+${FLAMEGRAPH_PATH}/flamegraph.pl --colors "${PALETTE:-hot}" <("${FLAMEGRAPH_PATH}/stackcollapse-${STACK:-perf}.pl" <(perf script)) > perf.svg
 rm -f perf.data
 if [ -f perf.svg ]; then
-    echo "Flame graph is at `pwd`/perf.svg" >&2
+    echo "Flame graph is at $(pwd)/perf.svg" >&2
 else 
     print_error "Flame graph generation failed."
     exit 1

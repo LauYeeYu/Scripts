@@ -14,14 +14,14 @@ EOF
 fi
 
 INPUT=$1
-if [ ! -f $INPUT ]; then
+if [ ! -f "$INPUT" ]; then
     error "$INPUT not exists!"
 fi
 MD_NAME="$(basename -- "$INPUT").md"
 PDF_NAME="$(basename -- "$INPUT" .md).pdf"
 
 if [ $# -eq 1 ]; then
-    OUTPUT="$(dirname $INPUT)/$PDF_NAME"
+    OUTPUT="$(dirname "$INPUT")/$PDF_NAME"
 else
     OUTPUT=$2
 fi

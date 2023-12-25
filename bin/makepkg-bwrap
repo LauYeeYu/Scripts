@@ -3,7 +3,7 @@
 mkdir -m 700 -p ~/.makepkg/gnupg
 TEMPDIR="$(mktemp -d -p /tmp makepkg.XXXXXXXXXX)"
 if [[ $? -ne 0 ]]; then
-    echo "\033[31mFail to make temp directory!\033[0m"
+    printf "\033[31mFail to make temp directory!\033[0m"
     exit 1
 fi
 
@@ -16,13 +16,13 @@ bwrap \
     --symlink usr/lib /lib \
     --symlink usr/lib /lib64 \
     --ro-bind /var/lib/pacman /var/lib/pacman \
-    --bind $TEMPDIR ~ \
+    --bind "$TEMPDIR" ~ \
     --bind ~/.cache ~/.cache \
     --bind ~/.makepkg/gnupg ~/.gnupg \
     --ro-bind ~/.ccache ~/.ccache \
     --ro-bind ~/.rustup ~/.rustup \
     --setenv FAKEROOTDONTTRYCHOWN 1 \
-    --bind $PWD $PWD \
+    --bind "$PWD" "$PWD" \
     /usr/bin/makepkg "$@"
 
 rm -rf "$TEMPDIR"

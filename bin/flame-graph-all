@@ -29,17 +29,16 @@ if [ -f perf.svg ]; then
     print_warning "perf.svg already exists. It will be overwritten."
 fi
 
-auto-sudo perf record -F 99 -a -g -- sleep ${MAX_TIME:-10} 2>/dev/null
-if [ $? -ne 0 ]; then
+if ! auto-sudo perf record -F 99 -a -g -- sleep "${MAX_TIME:-10}" 2>/dev/null; then
     print_error "Perf exits with a non-zero value."
     exit 1
 fi
 
 # generate the graph
-${FLAMEGRAPH_PATH}/flamegraph.pl --colors "${PALETTE:-hot}" <(${FLAMEGRAPH_PATH}/stackcollapse-${STACK:-perf}.pl <(auto-sudo perf script)) > perf.svg
+${FLAMEGRAPH_PATH}/flamegraph.pl --colors "${PALETTE:-hot}" <("${FLAMEGRAPH_PATH}/stackcollapse-${STACK:-perf}.pl" <(auto-sudo perf script)) > perf.svg
 rm -f perf.data
 if [ -f perf.svg ]; then
-    echo "Flame graph is at `pwd`/perf.svg" >&2
+    echo "Flame graph is at $(pwd)/perf.svg" >&2
 else 
     print_error "Flame graph generation failed."
     exit 1

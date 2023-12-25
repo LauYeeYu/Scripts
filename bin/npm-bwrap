@@ -10,5 +10,5 @@ bwrap \
     --symlink usr/lib /lib64 \
     --ro-bind ~/.npmrc ~/.npmrc \
     --bind ~/.cache/npm ~/.cache/npm \
-    --bind \$PWD \$PWD \
+    --bind "$PWD" "$PWD" \
     npm "$@"

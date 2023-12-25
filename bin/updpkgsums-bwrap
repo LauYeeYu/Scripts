@@ -14,5 +14,5 @@ bwrap \
     --bind ~/.cache ~/.cache \
     --bind ~/.makepkg/gnupg ~/.gnupg \
     --setenv FAKEROOTDONTTRYCHOWN 1 \
-    --bind $PWD $PWD \
+    --bind "$PWD" "$PWD" \
     /usr/bin/updpkgsums "$@"
