@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    cat << EOF >&2
+Usage: git-count-aheads-and-behinds <commit1> <commit2>
+EOF
+    exit 1
+fi
+
+get_count() {
+    git rev-list --count "$1" --not "$(git merge-base --all "$1" "$2")"
+}
+
+echo "$1 is $(get_count "$1" "$2") commit(s) behind, and $(get_count "$2" "$1") commit(s) ahead of $2."
