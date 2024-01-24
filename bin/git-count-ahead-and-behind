@@ -11,4 +11,4 @@ get_count() {
     git rev-list --count "$1" --not "$(git merge-base --all "$1" "$2")"
 }
 
-echo "$1 is $(get_count "$1" "$2") commit(s) behind, and $(get_count "$2" "$1") commit(s) ahead of $2."
+echo "$1 is $(get_count "$1" "$2") commit(s) ahead of, and $(get_count "$2" "$1") commit(s) behind $2."
