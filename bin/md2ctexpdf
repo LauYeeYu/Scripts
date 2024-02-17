@@ -35,6 +35,8 @@ cat << EOF >> "$TEMP_FILE"
 ---
 documentclass:
     - ctexart
+geometry:
+    - scale=0.8
 ---
 
 EOF
