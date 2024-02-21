@@ -4,7 +4,7 @@ MAN1_PREFIX = $(addsuffix /share/man/man1/, $(PREFIX))
 BASH_PREFIX = $(addsuffix /share/bash-completion/completions/, $(PREFIX))
 ZSH_PREFIX  = $(addsuffix /share/zsh/site-functions/_, $(PREFIX))
 
-SRC_TARGETS             = makepkg-recursively
+SRC_TARGETS             = makepkg-recursively git-status
 SRC_BIN_FILES           = $(addprefix bin/, $(SRC_TARGETS))
 SRC_INTERMEDIATE_FILES  = $(addprefix src/, $(SRC_TARGETS))
 BIN                     = $(shell ls bin) $(SRC_TARGETS)
@@ -42,6 +42,9 @@ $(ZSH_PREFIX)%: completion/zsh/%
 	install -Dm644 $< $@
 
 bin/makepkg-recursively: src/makepkg-recursively
+	cp $< $@
+
+bin/git-status: src/git-status
 	cp $< $@
 
 .PHONY: clean
