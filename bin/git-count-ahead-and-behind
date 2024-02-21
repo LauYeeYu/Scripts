@@ -7,6 +7,26 @@ EOF
     exit 1
 fi
 
+valid_ref() {
+    if ! git rev-parse "$1" > /dev/null 2>&1; then
+        echo "$1 does not exist!" >&2
+        return 1
+    else
+        return 0
+    fi
+}
+
+# We need to print all error before exit, so the following logic is a little
+# bit complicated and stupid.
+if ! valid_ref "$1"; then
+    valid_ref "$2"
+    exit 1
+else
+    if ! valid_ref "$2"; then
+        exit 1
+    fi
+fi
+
 get_count() {
     git rev-list --count "$1" --not "$(git merge-base --all "$1" "$2")"
 }
