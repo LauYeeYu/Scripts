@@ -1,0 +1,8 @@
+#compdef git-status
+
+local arguments=(
+  '(- *)'{-H,--human}'[Show human readable status]'
+  '(- *)'{-h,--help}'[print usage]'
+)
+
+_arguments $arguments

@@ -1,0 +1,15 @@
+# bash completion for git-status     -*- shell script -*-
+
+_git-status() {
+    local cur prev words cword comp_args was_split
+    _init_completion -s || return
+    if [[ $cur == --* ]]; then
+        # Complete long options
+        local long_options="--help --human"
+        COMPREPLY=($(compgen -W "$long_options" -- "$cur"))
+
+    elif [[ $cur == -* ]]; then
+        local text_options="-h -H"
+        COMPREPLY=($(compgen -W "$text_options" -- "$cur"))
+    fi
+} && complete -F _git-status git-status
