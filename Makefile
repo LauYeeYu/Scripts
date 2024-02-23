@@ -7,7 +7,7 @@ ZSH_PREFIX  = $(addsuffix /share/zsh/site-functions/_, $(PREFIX))
 SRC_TARGETS             = makepkg-recursively git-status
 SRC_BIN_FILES           = $(addprefix bin/, $(SRC_TARGETS))
 SRC_INTERMEDIATE_FILES  = $(addprefix src/, $(SRC_TARGETS))
-BIN                     = $(shell ls bin) $(SRC_TARGETS)
+BIN                     = $(shell ls bin)
 BIN_TARGETS             = $(addprefix $(BIN_PREFIX), $(BIN))
 MAN1                    = $(shell cd man && find -name '*.1')
 MAN1_TARGETS            = $(addprefix $(MAN1_PREFIX), $(MAN1))
@@ -18,9 +18,11 @@ ZSH_COMPLETION_TARGETS  = $(addprefix $(ZSH_PREFIX), $(ZSH_COMPLETION))
 
 CXXFLAGS += -O2 -std=c++17 -MMD
 
+.PHONY: all
+all: srcs
+
 .PHONY: install
 install: bins man1s bash-completions zsh-completions
-all: srcs
 
 .PHONY: srcs bins man1s bash-completions zsh-completions
 srcs: $(SRC_BIN_FILES)
