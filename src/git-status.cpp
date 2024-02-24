@@ -252,9 +252,9 @@ void PrintResult(const Status& status, const cxxopts::ParseResult& result) {
                 hasStatus = true;
                 std::cout << status.staged;
                 if (status.staged > 1) {
-                    std::cout << " files staged";
+                    std::cout << " files/directories staged";
                 } else {
-                    std::cout << " file staged";
+                    std::cout << " file/directory staged";
                 }
             }
             if (status.conflicts > 0) {
@@ -264,9 +264,9 @@ void PrintResult(const Status& status, const cxxopts::ParseResult& result) {
                 hasStatus = true;
                 std::cout << status.conflicts;
                 if (status.conflicts > 1) {
-                    std::cout << " files in conflict";
+                    std::cout << " files/directories in conflict";
                 } else {
-                    std::cout << " file in conflict";
+                    std::cout << " file/directory in conflict";
                 }
             }
             if (status.changed > 0) {
@@ -276,9 +276,9 @@ void PrintResult(const Status& status, const cxxopts::ParseResult& result) {
                 hasStatus = true;
                 std::cout << status.changed;
                 if (status.changed > 1) {
-                    std::cout << " files changed";
+                    std::cout << " files/directories changed";
                 } else {
-                    std::cout << " file changed";
+                    std::cout << " file/directory changed";
                 }
             }
             if (status.untracked > 0) {
@@ -288,21 +288,9 @@ void PrintResult(const Status& status, const cxxopts::ParseResult& result) {
                 hasStatus = true;
                 std::cout << status.untracked;
                 if (status.untracked > 1) {
-                    std::cout << " files untracked";
+                    std::cout << " files/directories untracked";
                 } else {
-                    std::cout << " file untracked";
-                }
-            }
-            if (status.stashed > 0) {
-                if (hasStatus) {
-                    std::cout << ", ";
-                }
-                hasStatus = true;
-                std::cout << status.stashed;
-                if (status.stashed > 1) {
-                    std::cout << " stashes";
-                } else {
-                    std::cout << " stash";
+                    std::cout << " file/directory untracked";
                 }
             }
             if (status.clean) {
@@ -319,9 +307,21 @@ void PrintResult(const Status& status, const cxxopts::ParseResult& result) {
                 hasStatus = true;
                 std::cout << status.deleted;
                 if (status.deleted > 1) {
-                    std::cout << " files deleted";
+                    std::cout << " files/directories deleted";
                 } else {
-                    std::cout << " file deleted";
+                    std::cout << " file/directories deleted";
+                }
+            }
+            if (status.stashed > 0) {
+                if (hasStatus) {
+                    std::cout << ", ";
+                }
+                hasStatus = true;
+                std::cout << status.stashed;
+                if (status.stashed > 1) {
+                    std::cout << " stashes";
+                } else {
+                    std::cout << " stash";
                 }
             }
             if (hasStatus) {
