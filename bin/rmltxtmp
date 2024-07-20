@@ -1,0 +1,179 @@
+#!/bin/bash
+
+# Remove Latex temporary files
+# The file list is from Github's gitignore library
+
+# Auxiliary and intermediate files from TeX build
+
+# latex auxiliary files
+rm -f *.aux *.lof *.log *.lot *.fls *.out *.toc *.fmt *.fot *.cb *.cb2 .*.lb
+
+# intermediate documents
+rm -f *.dvi *.xdv *-converted-to.*
+rm -f .pdf
+
+# bibliography auxiliary files
+rm -f *.bbl *.bcf *.blg *-blx.aux *-blx.bib *.run.xml
+
+# build tool auxilary files
+rm -f *.fdb_latexmk *.synctex *.synctex\(busy\) *.synctex.gz \
+  *.synctex.gz\(busy\) *.pdfsync *.rubbercache rubber.cache
+
+# latexrun
+rm -rf latex.out/
+
+# Auxiliary and intermediate files from other packages:
+
+# algorithms
+rm -f *.alg *.loa
+
+# achemso
+rm -f acs-*.bib
+
+# amsthm
+rm -f *.thm
+
+# beamer
+rm -f *.nav *.pre *.snm *.vrb
+
+# changes
+rm -f *.soc
+
+# comment
+rm -f *.cut
+
+# cprotect
+rm -f *.cpt
+
+# elsarticle (documentclass of Elsevier journals)
+rm -f *.spl
+
+# endnotes
+rm -f *.ent
+
+# fixme
+rm -f *.lox
+
+# feynmf/feynmp
+rm -f *.mf *.mp *.t[1-9] *.t[1-9][0-9] *.tfm
+
+#(r)(e)ledmac/(r)(e)ledpar
+rm -f *.end *.\?end *.[1-9] *.[1-9][0-9] *.[1-9][0-9][0-9] *.[1-9]R \
+  *.[1-9][0-9]R *.[1-9][0-9][0-9]R *.eledsec[1-9] *.eledsec[1-9]R \
+  *.eledsec[1-9][0-9] *.eledsec[1-9][0-9]R *.eledsec[1-9][0-9][0-9] \
+  *.eledsec[1-9][0-9][0-9]R
+
+# glossaries
+rm -f *.acn *.acr *.glg *.glo *.gls *.glsdefs *.lzo *.lzs *.slg *.slo *.sls
+
+# gnuplot
+rm -f *.gnuplot *.table
+
+# gnuplottex
+rm -f *-gnuplottex-*
+
+# gregoriotex
+rm -f *.gaux *.glog *.gtex
+
+# htlatex
+rm -f *.4ct *.4tc *.idv *.lg *.trc *.xref
+
+# hypdoc
+rm -f *.hd
+
+# hyperref
+rm -f *.brf
+
+# knitr
+rm -f *-concordance.tex *-tikzDictionary
+
+# listings
+rm -f *.lol
+
+# luatexja-ruby
+rm -f *.ltjruby
+
+# makeidx
+rm -f *.idx *.ilg *.ind
+
+# minitoc
+rm -f *.maf *.mlf *.mlt *.mtc[0-9]* *.slf[0-9]* *.slt[0-9]* *.stc[0-9]*
+
+# minted
+rm -f _minted* *.pyg
+
+# morewrites
+rm -f *.mw
+
+# newpax
+rm -f *.newpax
+
+# nomencl
+rm -f *.nlg *.nlo *.nls
+
+# pax
+rm -f *.pax
+
+# pdfpcnotes
+rm -f *.pdfpc
+
+# sagetex
+rm -f *.sagetex.sage *.sagetex.py *.sagetex.scmd
+
+# scrwfile
+rm -f *.wrt
+
+# svg
+rm -rf svg-inkscape/
+
+# sympy
+rm -f *.sout *.sympy
+rm -rf sympy-plots-for-*.tex/
+
+# pdfcomment
+rm -f *.upa *.upb
+
+# pythontex
+rm -f *.pytxcode
+rm -rf pythontex-files-*/
+
+# tcolorbox
+rm -f *.listing
+
+# thmtools
+rm -f *.loe
+
+# TikZ & PGF
+rm -f *.dpth
+rm -f *.md5
+rm -f *.auxlock
+
+# titletoc
+rm -f *.ptc
+
+# todonotes
+rm -f *.tdo
+
+# vhistory
+rm -f *.hst *.ver
+
+# easy-todo
+rm -f *.lod
+
+# xcolor
+rm -f *.xcp
+
+# xmpincl
+rm -f *.xmpi
+
+# xindy
+rm -f *.xdy
+
+# xypic precompiled matrices and outlines
+rm -f *.xyc *.xyd
+
+# endfloat
+rm -f *.ttt *.fff
+
+# Latexian
+rm -f TSWLatexianTemp*
